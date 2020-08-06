@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT  || 5000;
+const mongo = process.env.MONGODB_CONN
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -34,7 +35,7 @@ app.use('/api/contact' , contact)
 app.use('/api/upload', upload );
 
 mongoose.connect(
-  process.env.MONGODB_CONN,
+  mongo,
   { useNewUrlParser: true , useUnifiedTopology: true },
   ()=>{
   console.log("connected to db!")
