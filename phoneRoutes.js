@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const router = express.Router();
 const Post = require('./models/PostPhones');
 const PostAccess = require('./models/PostAccessories');
@@ -13,7 +12,9 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:phoneId', async (req, res) => {
+router.get('/:phoneId', getPhone);
+
+async function getPhone(req, res){
   try{
     const phones = await Post.find({id : req.params.phoneId});
     const accessories = await PostAccess.find({phoneid : req.params.phoneId});
@@ -23,7 +24,7 @@ router.get('/:phoneId', async (req, res) => {
   catch(err){
     console.log(err);
   }
-  });
+  };
 
   router.post('/', async (req, res) => {
     console.log(req.body)

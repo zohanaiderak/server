@@ -3,24 +3,27 @@ const fs = require('fs');
 const router = express.Router();
 const Post = require('./models/PostAccessories');
 
-router.get('/', async (req, res) => {
+router.get('/', getAccess);
+
+async function getAccess (req, res){
   try{
     const posts = await Post.find();
     res.json(posts);
   }catch(err){
     res.json({message: err})
   }
-})
+};
 
-router.get('/:accessoryId', async (req,res)=>{
+router.get('/:accessoryId', getAccessId);
+
+async function getAccessId (req,res){
     try{
       const accessories = await Post.find({id : req.params.accessoryId});
         res.status(200).json(accessories);
     }catch(err){
       console.log(err);
     }
-    }   
-)
+    };
 
 router.post('/', (req, res) => {
     console.log(req.body)
