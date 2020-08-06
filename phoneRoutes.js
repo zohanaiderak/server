@@ -3,18 +3,20 @@ const router = express.Router();
 const Post = require('./models/PostPhones');
 const PostAccess = require('./models/PostAccessories');
 
-router.get('/', async (req, res) => {
+router.get('/', getPhone);
+
+async function getPhone (req, res){
   try{
     const posts = await Post.find();
     res.json(posts);
   }catch(err){
     res.json({message: err})
   }
-})
+};
 
-router.get('/:phoneId', getPhone);
+router.get('/:phoneId', getPhoneId);
 
-async function getPhone(req, res){
+async function getPhoneId(req, res){
   try{
     const phones = await Post.find({id : req.params.phoneId});
     const accessories = await PostAccess.find({phoneid : req.params.phoneId});
